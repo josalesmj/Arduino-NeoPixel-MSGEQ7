@@ -1,31 +1,3 @@
-/*
-ARDUINO   PORT 
-  PIN     NAME
--------   ----  
-   0      PD0
-   1      PD1
-   2      PD2
-   3      PD3
-   4      PD4
-   5      PD5
-   6      PD6
-   7      PD7
-   8      PB0
-   9      PB1
-  10      PB2
-  11      PB3
-  12      PB4
-  13      PB5
-  A0      PC0
-  A1      PC1
-  A2      PC2
-  A3      PC3
-  A4      PC4
-  A5      PC5 
-*/
-
-//PORTD &= ~bit(PORTD2);                    // set digital pin 2 as LOW
-//PORTD |= bit(PORTD2);                     // set digital pin 2 as HIGH
 
 /*
  * Histórico de otimização do código
@@ -74,7 +46,7 @@ ARDUINO   PORT
  *        
  *        
  * Versão atual:
- *    1.5
+ *    1.4
  *       
  */
 
@@ -89,7 +61,7 @@ ARDUINO   PORT
 
 Adafruit_NeoPixel pixels(NUMLED, PIN, NEO_GRB + NEO_KHZ800);
 
-Analyzer Audio = Analyzer(2, 3, 0); //Strobe pin ->10  RST pin ->11 Analog Pin ->0
+Analyzer Audio = Analyzer(2, 3, 0);
 
 void setup() {
   //Serial.begin(115200);
@@ -130,48 +102,3 @@ void loop() {
     pixels.show();
   }
 }
-
-/*int main () {
-  Serial.begin(115200);
-  pixels.begin();
-  pixels.setBrightness(15);
-  Audio.Init();         //Init module
-  //pinMode(msgRST, OUTPUT);
-  //pinMode(msgStrobe, OUTPUT);
-  DDRD = DDRD | B00001100; //Coloca pin 2 e 3 como OUTPUT
-
-  while (true) {
-    Serial.println("1");
-    pixels.clear();
-    uint32_t myColor = pixels.Color(random(1, 256), random(1, 256), random(1, 256));
-    boolean flag = false;
-    int FreqVal[7] = {63, 160, 400, 1000, 2500, 6250, 16000};
-    Audio.ReadFreq(FreqVal);      //return 7 value of 7 bands pass filter
-    //Audio.ReadFreq(new int[7] {63, 160, 400, 1000, 2500, 6250, 16000});
-    Serial.println("2");
-    for (int i = 0; i < 7; i++) {
-      Serial.println("3");
-      //digitalWrite(msgStrobe, LOW);
-      PORTD &= ~bit(PORTD2);  //Coloca pino 2 como LOW
-      //delayMicroseconds(20);
-      int spectrumRead = analogRead(0);
-      int PWMvalue = map(spectrumRead, 0, 1024, 0, 16);
-      //digitalWrite(msgStrobe, HIGH);
-      PORTD |= bit(PORTD2); //Coloca pino 2 como HIGH
-      if(PWMvalue > 0) {
-        if(flag == false) {
-          pixels.fill(myColor, ((i+1)*16) - PWMvalue, PWMvalue);
-        }
-        else {
-          pixels.fill(myColor, 16*i, PWMvalue);
-        }
-        Serial.println("4");
-      }
-      Serial.println("5");
-      flag = !flag;
-      pixels.show();
-    }
-    Serial.println("6");
-  }
-  Serial.println("7");
-}*/
